@@ -14,7 +14,6 @@ function fibs(num) {
 }
 
 const res = fibs(8)
-console.log(res)
 
 function fibsRec(n){
   // ベースケース
@@ -33,15 +32,60 @@ function fibsRec(n){
 }
 
 const resRec = fibsRec(4)
-console.log(resRec)
 
 function mergeSort(arr){
     // Base case
     if(arr.length === 0) return [];
     if(arr.length === 1) return arr;
 
-    // recursive method
-    if(arr.length % 2 === 0){
-        
+    // deviding arr
+    const num = arr.length;
+    const num1 = Math.round(num / 2);
+    const num2 = num - num1;
+
+    const devidedArr1 = [];
+    const devidedArr2 = [];
+    
+    for(let i = 0; i < num1; i++){
+        devidedArr1.push(arr[i]);
     }
+
+    for(let i = 0; i < num2; i++){
+        devidedArr2.push(arr[num1+i]);
+    }
+
+    mergeSort(devidedArr1);
+    mergeSort(devidedArr2);
+    return merge(devidedArr1, devidedArr2, arr);
+
+
 }
+
+function merge(arr1, arr2, mergeArr) {
+    const num1 = arr1.length;
+    const num2 = arr2.length;
+
+    let i = 0, j = 0;
+
+    while(i < num1 && j < num2) {
+        if(arr1[i] < arr2[j]){
+            mergeArr[i+j] = arr1[i];
+            i++;
+        }else {
+            mergeArr[i+j] = arr2[j]
+            j++;
+        }
+    }
+    while(i < num1) {
+        mergeArr[i+j] = arr1[i];
+        i++;
+    }
+    while(j < num2) {
+        mergeArr[i+j] = arr2[j];
+        j++;
+    }
+    return mergeArr;
+    
+}
+
+console.log(mergeSort([1,8,7,5,6]))
